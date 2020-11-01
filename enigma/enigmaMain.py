@@ -52,15 +52,15 @@ def encode_decode_file(roll1, roll2, roll3, reverseRoll, wp1, wp2, wp3):
 
 def generateReverseLookupTables():
     for i in range(len(roll1)):
-        reverseLookup_roll1[i] = roll1.index(roll1)
+        reverseLookup_roll1[i] = roll1.index(i)
     for i in range(len(roll2)):
-        reverseLookup_roll2[i] = roll2.index(roll2)
+        reverseLookup_roll2[i] = roll2.index(i)
     for i in range(len(roll3)):
-        reverseLookup_roll2[i] = roll3.index(roll3)
+        reverseLookup_roll2[i] = roll3.index(i)
     for i in range(len(plugboard)):
-        reverseLookup_plugboard[i] = plugboard.index(plugboard)
+        reverseLookup_plugboard[i] = plugboard.index(i)
     for i in range(len(alphabet)):
-        reverseLookup_alphabet[i] = alphabet.index(alphabet)
+        reverseLookup_alphabet[i] = alphabet.index(i)
 
 # einstellung
 plugboard = []

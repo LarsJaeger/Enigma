@@ -3,19 +3,12 @@ import datetime
 import pickle
 global alphabet
 alphabet = []
+reverseLookup_alphabet = []
 for i in range(32, 126, 1):
-    alphabet.append(chr(i))
+    alphabet.append(i)
 for i in range(161, 328, 1):
     if i != 173:
-        alphabet.append(chr(i))
-
-
-def rotateRoll(walzeStandard, wp):
-    walzeTemp = walzeStandard
-    for i in range(wp):
-        walzeTemp.insert(0, walzeTemp[-1])
-        walzeTemp.pop(-1)
-    return walzeTemp
+        alphabet.append(i)
 
 
 def loadPlugboard(day, month):
@@ -24,10 +17,7 @@ def loadPlugboard(day, month):
 
 
 def encode_decode_char(roll1, roll2, roll3, reverseRoll, wp1, wp2, wp3, b):
-    roll1 = rotateRoll(roll1, wp1)
-    roll2 = rotateRoll(roll2, wp2)
-    roll3 = rotateRoll(roll3, wp3)
-    out = alphabet[reverseLookup_plugboard[reverseLookup_roll1[reverseLookup_roll2[reverseLookup_roll3[reverseRoll[roll3[roll2[roll1[plugboard()[alphabet.index(b)]]]]]]]]]]
+    out = chr(alphabet[reverseLookup_plugboard[reverseLookup_roll1[(reverseLookup_roll2[(reverseLookup_roll3[(reverseRoll[roll3[(roll2[(roll1[(plugboard[reverseLookup_alphabet[b]] + wp1) % len(roll1)] + wp1) % len(roll2)] + wp1) % len(roll3)]] - wp3) % len(roll3)] - wp2) % len(roll2)] - wp1) % len(roll1)]]])
     return out
 
 
@@ -35,7 +25,7 @@ def encode_decode_text(roll1, roll2, roll3, reverseRoll, wp1, wp2, wp3, text):
     out = ""
     for char in text:
         if alphabet.count(char) != 0:
-            out = out + encode_decode_char(roll1, roll2, roll3, reverseRoll, wp1, wp2, wp3, char)
+            out += encode_decode_char(roll1, roll2, roll3, reverseRoll, wp1, wp2, wp3, char)
             if wp1 == len(roll1) - 1:
                 wp1 = 0
                 if wp2 == len(roll2) - 1:
@@ -59,6 +49,7 @@ def encode_decode_file(roll1, roll2, roll3, reverseRoll, wp1, wp2, wp3):
     dateiIn.close()
     dateiOut.close()
 
+
 def generateReverseLookupTables():
     for i in range(len(roll1)):
         reverseLookup_roll1[i] = roll1.index(roll1)
@@ -68,6 +59,8 @@ def generateReverseLookupTables():
         reverseLookup_roll2[i] = roll3.index(roll3)
     for i in range(len(plugboard)):
         reverseLookup_plugboard[i] = plugboard.index(plugboard)
+    for i in range(len(alphabet)):
+        reverseLookup_alphabet[i] = alphabet.index(alphabet)
 
 # einstellung
 plugboard = []

@@ -2,13 +2,15 @@
 import datetime
 import pickle
 global alphabet
-alphabet = []
-reverseLookup_alphabet = []
+alphabet = {}
+reverseLookup_alphabet = {}
 for i in range(32, 126, 1):
-    alphabet.append(i)
+    alphabet.add(i,alphabet.len())
+    reverseLookup_alphabet.add(alphabet.len)
 for i in range(161, 328, 1):
     if i != 173:
-        alphabet.append(i)
+        alphabet.add(i,alphabet.len())
+        reverseLookup_alphabet.add(alphabet.len)
 
 
 def loadPlugboard(day, month):
@@ -58,9 +60,11 @@ def generateReverseLookupTables():
     for i in range(len(roll3)):
         reverseLookup_roll2.append(roll3.index(i))
     for i in range(len(plugboard)):
-        reverseLookup_plugboard.append(plugboard.index(i))
-    for i in range(len(alphabet)):
-        reverseLookup_alphabet.append(alphabet.index(i))
+        if(plugboard.__contains__(i)):
+            reverseLookup_plugboard.append(plugboard.index(i))
+        else:
+            reverseLookup_plugboard.append(None)
+    # alphabet reverse table got created when alphabet is filled
 
 # einstellung
 plugboard = []
